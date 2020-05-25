@@ -21,14 +21,15 @@
 // #include "tools/stats.h"
 #include "tools/TimeQueue.h"
 
+class World;
 class Population {
   // references
   emp::Random & random;
   World & world; 
+  const std::string name;
 
   //organism variables
   emp::vector<Organism> organisms;       ///< All organisms in this population
-  const organism_type;                   ///< What type of organisms make up the population
   bool are_parasites;                    ///< Are the organisms in the population parasites?
   size_t num_organisms = 0;              ///< How many organisms are currently in the population?
 
@@ -38,18 +39,21 @@ class Population {
   size_t genome_size = 100;              ///< How many bits in genome?
   double mutation_probability = 0.0;     ///< Probability of an offspring being mutated.
 
-  // constructor
-  Population(size_t initial_pop_size, const organism_type, bool are_parasites, emp::Random & _random, World & _world) : random(_random), world(_world), organism_queue(initial_pop_size) { 
-    
-    this.organism_type = organism_type;
-    this.are_parasites = are_parasites;
+  public:
+    // constructor
+    Population(const std::string & _name, emp::Random & _random, World & _world, size_t _initial_pop_size = 0, bool _are_parasites = false) 
+    : random(_random), world(_world), name(_name), organism_queue(_initial_pop_size) 
+    { 
 
-    // create starting organisms & add to population
-    for (int org_count = 0; orgCount <= initial_pop_size; org_count) {
-      // 1. create organism 
-      // 2. add to population
-      // 3. place in world 
-    }
+      size_t initial_pop_size = _initial_pop_size;
+      are_parasites = _are_parasites;
+
+      // create starting organisms & add to population
+      for (int org_count = 0; org_count <= initial_pop_size; org_count++) {
+        // 1. create organism 
+        // 2. add to population
+        // 3. place in world 
+      }
 
   }
 

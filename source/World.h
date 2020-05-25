@@ -24,9 +24,13 @@ class World {
 
     //world contents 
     emp::vector<Population> populations;
+    emp::Random random;
         //resources?
-    
-    World(emp::vector<Population> _populations) : populations(_populations) {};
+public:
+    World() {}
+    void addPopulation(const std::string & population_name, size_t init_size = 0, bool is_parasite = false) {
+        populations.emplace_back(population_name, random, *this, init_size, is_parasite);
+    }
 
     /// spatial map of world
     struct WorldMap {
