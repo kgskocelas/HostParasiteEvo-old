@@ -1,5 +1,5 @@
 # Project-specific settings
-PROJECT := HostParasiteEvo
+PROJECT := Experiment
 EMP_DIR := ../Empirical/source
 
 # Flags to use regardless of compiler
@@ -33,11 +33,11 @@ debug-web:	$(PROJECT).js
 
 web-debug:	debug-web
 
-$(PROJECT):	source/$(PROJECT).h source/native/$(PROJECT).cc
-	$(CXX_nat) $(CFLAGS_nat) source/native/$(PROJECT).cc -o $(PROJECT)
+$(PROJECT):	source/$(PROJECT).h source/native/$(PROJECT).cpp
+	$(CXX_nat) $(CFLAGS_nat) source/native/$(PROJECT).cpp -o $(PROJECT)
 	@echo To build the web version use: make web
 
-$(PROJECT).js: source/web/$(PROJECT)-web.cc
+$(PROJECT).js: source/web/$(PROJECT)-web.cpp
 	$(CXX_web) $(CFLAGS_web) source/web/$(PROJECT)-web.cc -o web/$(PROJECT).js
 
 clean:

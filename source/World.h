@@ -18,34 +18,55 @@
 #include "tools/stats.h"
 #include "tools/TimeQueue.h"
 
-class World {
+class World
+{
 
     //world variables
 
-    //world contents 
+    //world contents
     emp::vector<Population> populations;
     emp::Random random;
-        //resources?
+    //resources?
 public:
     World() {}
-    void addPopulation(const std::string & population_name, size_t init_size = 0, bool is_parasite = false) {
+    void addPopulation(const std::string &population_name, size_t init_size = 0, bool is_parasite = false)
+    {
         populations.emplace_back(population_name, random, *this, init_size, is_parasite);
     }
 
     /// spatial map of world
-    struct WorldMap {
+    struct WorldMap
+    {
 
         //map variables
-
     };
+};
 
-    /// Results from a single run.
-    struct RunResults {
+/// Results from a single run.
+struct RunResults
+{
 
-        //result variables
+    double run_time;                ///< What was the replication time of this group?
+    emp::vector<double> org_counts; ///< How many orgs have each bit count?
+    double extra_cost;              ///< Extra cost due to unrestrained orgs.
 
-    };
+    RunResults() : run_time(0.0), org_counts(0) { ; }
+    RunResults(const size_t num_bits) : run_time(0.0), org_counts(num_bits + 1, 0.0) { ; }
+    RunResults(const RunResults &) = default;
+    RunResults(RunResults &&) = default;
 
+    RunResults &operator=(const RunResults &) = default;
+    RunResults &operator=(RunResults &&) = default;
+
+    RunResults &operator+=(const RunResults &in)
+    {
+        emp_assert(org_counts.size() == in.org_counts.size());
+        run_time += in.run_time;
+        for (size_t i = 0; i < org_counts.size(); i++)
+            org_counts[i] += in.org_counts[i];
+        extra_cost += extra_cost;
+        return *this;
+    }
 };
 
 #endif /// WORLD_H
